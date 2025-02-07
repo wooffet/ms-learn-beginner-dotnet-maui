@@ -16,11 +16,13 @@ public partial class MainPage : ContentPage
 
         if (!string.IsNullOrEmpty(translatedNumber))
         {
-            // TODO: Implement logic
+            CallButton.IsEnabled = true;
+            CallButton.Text = "Call " + translatedNumber;
         }
         else
         {
-            // TODO: Implement logic
+            CallButton.IsEnabled = false;
+            CallButton.Text = "Call";
         }
     }
 }
