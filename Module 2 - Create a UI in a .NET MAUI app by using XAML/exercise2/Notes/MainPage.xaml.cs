@@ -1,4 +1,6 @@
-﻿namespace Notes;
+﻿using Microsoft.Maui.Controls;
+
+namespace Notes;
 
 public partial class MainPage : ContentPage
 {
@@ -10,13 +12,17 @@ public partial class MainPage : ContentPage
 
         if (File.Exists(_fileName))
         {
-            editor.Text = File.ReadAllText(_fileName);
+            Editor.Text = File.ReadAllText(_fileName);
         }
+
+        SaveButton.Clicked += OnSaveButtonClicked;
+
+        DeleteButton.Clicked += OnDeleteButtonClicked;
     }
 
     void OnSaveButtonClicked(object sender, EventArgs e)
     {
-        File.WriteAllText(_fileName, editor.Text);
+        File.WriteAllText(_fileName, Editor.Text);
     }
 
     void OnDeleteButtonClicked(object sender, EventArgs e)
@@ -25,7 +31,7 @@ public partial class MainPage : ContentPage
         {
             File.Delete(_fileName);
         }
-        editor.Text = string.Empty;
+        Editor.Text = string.Empty;
     }
 }
 
