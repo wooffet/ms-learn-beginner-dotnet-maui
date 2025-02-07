@@ -28,9 +28,24 @@ public partial class MainPage : ContentPage
 
     async void OnCall(object sender, EventArgs e)
     {
-        if (await this.DisplayAlert("Dial a number", $"Would you like to call {translatedNumber}?", "Yes", "No"))
+        if (await DisplayAlert("Dial a number", $"Would you like to call {translatedNumber}?", "Yes", "No"))
         {
-            // TODO: dial the phone
+            try
+            {
+                if (PhoneDialer.Default.IsSupported && !string.IsNullOrWhiteSpace(translatedNumber))
+                {
+                    PhoneDialer.Default.Open(translatedNumber);
+                }
+            }
+            catch (ArgumentNullException)
+            {
+                await DisplayAlert("Unable to dial", "Phone number was not valid", "Ok");
+            }
+            catch (Exception)
+            {
+                // Other error has occured
+                await DisplayAlert("Unable to dial", "Phone dialling failed", "Ok");
+            }
         }
     }
 }
